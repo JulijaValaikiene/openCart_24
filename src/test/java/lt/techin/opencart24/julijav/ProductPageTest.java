@@ -14,6 +14,8 @@ public class ProductPageTest extends BasePageTest {
     ProductPage productPage;
     MainPage mainPage;
     QaPage qaPage;
+    ProductBasket productBasket;
+    String productName = "Code Confusion Raccoon";
     private final Logger log = (Logger) LoggerFactory.getLogger(MainPageTest.class);
 
     @Test
@@ -35,17 +37,34 @@ public class ProductPageTest extends BasePageTest {
         productPage = new ProductPage(driver);
         mainPage = new MainPage(driver);
         qaPage = new QaPage(driver);
+        productBasket = new ProductBasket(driver);
         mainPage.clickQaButton();
         qaPage.clickListButton();
         qaPage.clickRacoonProductButton();
-
+        assertTrue(productPage.checkDescriptionButton());
         String randomNumber = TestUtils.getRandomNumber();
         productPage.setRacoonProductQty(randomNumber);
         productPage.clickAddToChat();
         assertTrue(productPage.visibleAlertMessageButton());
         productPage.clickAlertMessageButton();
         log.info("Product added to the basket!");
-        productPage.clickBasketButton();
     }
 
+    @Test
+    public void checkInfoMessageText() {
+        productPage = new ProductPage(driver);
+        mainPage = new MainPage(driver);
+        qaPage = new QaPage(driver);
+        productBasket = new ProductBasket(driver);
+        mainPage.clickQaButton();
+        qaPage.clickListButton();
+        qaPage.clickRacoonProductButton();
+        assertTrue(productPage.checkDescriptionButton());
+        String randomNumber = TestUtils.getRandomNumber();
+        productPage.setRacoonProductQty(randomNumber);
+        productPage.clickAddToChat();
+//        assertEquals("Success: You have added Code Confusion Raccoon to your shopping cart!", productPage.getAlertMessageText(), "Alert message should contain 'Success: You have added <product name> to your shopping cart!' ");
+        assertEquals("Success: You have added " + productName + " to your shopping cart!", productPage.getAlertMessageText(), "Alert message should contain 'Success: You have added <product name> to your shopping cart!' ");
+        log.info("Alert message is Displayed!");
+    }
 }

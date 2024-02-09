@@ -18,13 +18,13 @@ public class BasePageTest {
     WebDriver driver;
     Wait<WebDriver> wait;
     String mainPageURL = "http://192.168.88.86/";
-
     private static final Logger log = getLogger(lookup().lookupClass());
 
     @BeforeEach
     void setup() {
         driver = new ChromeDriver();
         driver.get(mainPageURL);
+        log.info("Navigated to {}", mainPageURL);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(8));
         wait = new FluentWait<>(driver)
@@ -36,12 +36,12 @@ public class BasePageTest {
 
     }
 
-//    @AfterEach
-//    void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//            log.info("WebDriver closed");
-//        }
-//    }
+    @AfterEach
+    void tearDown() {
+        if (driver != null) {
+            driver.quit();
+            log.info("WebDriver closed");
+        }
+    }
 
 }

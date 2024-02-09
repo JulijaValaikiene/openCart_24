@@ -4,11 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ProductPage extends BasePage{
+public class ProductPage extends BasePage {
     public ProductPage(WebDriver driver) {
         super(driver);
     }
-
 
 
     @FindBy(xpath = "//li[.='Product Code: Racoon']")
@@ -20,31 +19,44 @@ public class ProductPage extends BasePage{
     @FindBy(id = "button-cart")
     WebElement addToChatButton;
 
-    @FindBy(css = ".btn-inverse")
-    WebElement basketButton;
-
     @FindBy(xpath = "//div[@id='alert']//button[@type='button']")
     WebElement alertMessageButton;
 
-    public String getRacoonProductCodeText(){
-       return racoonProductCode.getText();
+    @FindBy(xpath = "//div[@id='alert']/div")
+    WebElement alertMessage;
+    @FindBy(xpath = "//div[@id='content']//a[text()='Description']")
+//    @FindBy(xpath = "//a[text()='Description']")
+    WebElement descriptionButton;
+
+    public String getRacoonProductCodeText() {
+        return racoonProductCode.getText();
     }
 
-    public void setRacoonProductQty(String randomNumber){
+    public void setRacoonProductQty(String randomNumber) {
+
+        racoonProductQty.clear();
         racoonProductQty.sendKeys(randomNumber);
     }
 
-    public void clickAddToChat(){
+    public void clickAddToChat() {
         addToChatButton.click();
     }
-    public void clickBasketButton(){
-        basketButton.click();
-    }
-    public boolean visibleAlertMessageButton(){
+
+    public boolean visibleAlertMessageButton() {
         alertMessageButton.isDisplayed();
         return true;
     }
-    public void clickAlertMessageButton(){
+
+    public void clickAlertMessageButton() {
         alertMessageButton.click();
+    }
+
+    public boolean checkDescriptionButton() {
+        descriptionButton.isDisplayed();
+        return true;
+    }
+
+    public String getAlertMessageText() {
+        return alertMessage.getText();
     }
 }
